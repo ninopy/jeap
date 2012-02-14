@@ -1,0 +1,21 @@
+   {{extend "base.html"}}  
+{{block content}}
+
+   <div class="row">
+	<div class="span9">
+   <div class="well">
+	<table >	
+       {{count = 1}}
+            {{for n in courses:}}
+				<tr>
+				<td>{{=count}}</td> 
+				<td><a href=/course/display_c/{{=n.c_name}}/{{=n.id}}>{{=n.c_name}}</a ></td> 
+				</tr>
+               {{count = count +1}} 
+            {{pass}}
+		
+	</table>
+  </div>
+  </div>
+  </div>
+{{end}}

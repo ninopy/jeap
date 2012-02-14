@@ -1,0 +1,44 @@
+{{extend "base.html"}}
+{{block content}}
+
+
+ <!-- Example row of columns --> 
+      <div class="row"> 
+          <div class="span3"> 
+           <code> {{=p.p_name}}依赖以下知识点：</code> </p> 
+	  		{{for np in pd:}}
+				<td> {{=np.d_parent_name}}</td>
+	  		{{pass}} 
+           </div> <!--span3-->
+
+         <div class="span6"> 
+          <code> {{=p.p_name}} </code> </p>
+           	<!-- table border="1" class="tb" style="border-collapse: collapse; margin:0 auto" bordercolor="#FFF" -->	
+			<table class="table table-striped table-bordered table-condensed">
+				<tr>
+				<td>{{=p.p_name}}的具体信息：</td>
+				<td>{{=p.p_desc}}</td>
+				</tr>
+				<tr>
+				<td>相关网址</td> 
+				<td>{{=p.p_av_addr}}</td> 
+				</tr>
+	     </table>
+			<table class="table table-striped table-bordered table-condensed">
+				<td><a class="btn btn-primary" href=/points/add_d/{{=p.p_name}}>添加依赖</a>
+				<td><a class="btn btn-primary" href=/points/edit_p/{{=p.p_name}}/{{=p.id}}><i class="icon-pencil"></i> 修改知识点</a>
+				<td><a class ="btn btn-danger" href=/points/delete_p/{{=p.id}}><i class="icon-trash"></i>删除知识点</a>
+	     </table>
+       </div> 
+     
+
+      <div class="span3"> 
+          <code>
+	      以下知识点依赖{{=p.p_name}}：</code> </p>
+		  {{for nc in cd:}}
+			<td> {{=nc.d_name}}</td>
+	  	  {{pass}}
+       </div> 
+
+      </div> 
+{{end}}

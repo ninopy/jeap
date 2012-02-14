@@ -1,0 +1,24 @@
+   {{extend "base.html"}}  
+{{block content}}
+
+
+
+  <div class="row">
+  <div class="span9">
+	<div class="well">
+	<table >	
+       {{count = 1}}
+            {{for n in points:}}
+				<tr>
+				<td>{{=count}}</td> 
+				<td><a href=/points/display_p/{{=n.p_name}}/{{=n.id}}>{{=n.p_name}}</a ></td> 
+				</tr>
+               {{count = count +1}} 
+            {{pass}}
+		
+	 </table>
+     </div>
+     </div>
+   </div>
+
+{{end}}

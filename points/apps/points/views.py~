@@ -1,0 +1,54 @@
+#coding=utf-8
+from uliweb import expose
+from uliweb import settings
+from models import mpoints
+from models import mdeps
+from uliweb.orm import get_model
+
+@expose('/')
+def index():
+	points = mpoints.all()
+	return {'points':points}
+
+@expose('/add_p')
+def add_p():
+        from forms import PointsForm
+        form = PointsForm()
+        if request.method == 'GET':
+            return {'form':form}
+        elif request.method == 'POST':
+            flag = form.validate(request.params)
+            if flag:
+                n = mpoints(**form.data)
+                n.save()
+                return '<a href="http://www.jeapedu.com/points">添加完成</a>'
+            else:
+                message='错误'
+                return {'form':form}
+ 
+@expose('/edit_p/<p_name>')
+def edit_p(p_name):
+	from forms import PointsForm
+	if request.method == 'GET': 
+		p = mpoints.get(mpoints.c.p_name == p_name)
+		form = PointsForm(data ={'p_name':p.p_name,'p_desc':p.p_desc,'p_av_addr':p.p_av_addr})
+		return {'form':form}	
+	elif request.method == 'POST':
+            form = PointsForm()
+            flag = form.validate(request.params)
+			if flag:
+                n = mpoints(**form.data)
+                n.save()
+                return '<a href="http://www.jeapedu.com/points">添加完成</a>'
+            else:
+                message='错误'
+                return {'form':form}
+	
+
+
+@expose('/display_p/<p_name>')
+def display_p(p_name):
+	p = mpoints.get(mpoints.c.p_name == p_name)
+	return {'p':p}
+	
+

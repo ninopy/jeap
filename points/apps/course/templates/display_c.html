@@ -1,0 +1,50 @@
+{{extend "base.html"}}
+{{block content}}
+
+ <!-- Example row of columns --> 
+      <div class="row"> 
+
+        <div class="span3"> 
+             <code>  {{=c.c_name}}依赖以下课程： </code>
+            </p> 
+	  		{{for np in p_cdc:}}
+				<td> {{=np.c_parent_c}}</td>
+	  		{{pass}} 
+        </div> 
+
+
+        <div class="span6"> 
+
+         <code> {{=c.c_name}}  </code> </p>
+			<table class="table table-striped table-bordered table-condensed">
+				<tr>
+				<td>{{=c.c_name}}的具体信息：</td>
+				<td>{{=c.c_desc}}</td>
+				</tr>
+	        </table>
+		     
+		 <code>{{=c.c_name}} 的所有知识点</code> </p>
+		{{for p in p_cdp:}}
+		    <td><a href=/points/display_p/{{=p.c_deps_p}}/0>{{=p.c_deps_p}}</a> </td>
+		{{pass}}
+			<table class="table table-striped table-bordered table-condensed">
+   		        <td><a class="btn btn-primary" href=/course/add_cc/{{=c.c_name}}>添加课程依赖</a>
+				<td><a class="btn btn-primary" href=/course/add_cp/{{=c.c_name}}>添加知识点</a>
+				<td><a class="btn btn-primary" href=/course/edit_c/{{=c.c_name}}/{{=c.id}}><i class="icon-pencil"></i> 修改本课程</a>
+				<td><a class ="btn btn-danger" href=/course/delete_c/{{=c.id}}><i class="icon-trash"></i>删除课程</a>
+	        </table>
+
+
+       </div> 
+     
+
+      <div class="span3"> 
+          <code>
+	      以下课程依赖{{=c.c_name}}：</code> </p>
+		  {{for nc in c_cdc:}}
+			<td><a href =/course/display_c/{{=nc.c_name}}/0 > {{=nc.c_name}}</a></td>
+	  	  {{pass}}
+       </div> 
+
+      </div> 
+{{end}}
