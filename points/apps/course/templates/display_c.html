@@ -19,10 +19,9 @@
 			<table class="table table-striped table-bordered table-condensed">
 				<tr>
 				<td>{{=c.c_name}}的具体信息：</td>
-				<td>{{=c.c_desc}}</td>
 				</tr>
 	        </table>
-		     
+		     <div class="well"> {{<<c.c_desc}}</div> 
 		 <code>{{=c.c_name}} 的所有知识点</code> </p>
 		{{for p in p_cdp:}}
 		    <td><a href=/points/display_p/{{=p.c_deps_p}}/0>{{=p.c_deps_p}}</a> </td>

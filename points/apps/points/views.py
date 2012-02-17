@@ -69,7 +69,7 @@ def display_p(p_name,id):
 def delete_p(id):
 	p=mpoints.get(int(id))
 	p.delete()
-	return '<a href="/">添加完成</a>'
+	return '<a href="/">ok</a>'
 ######################################
 @expose('/points/add_d/<p_name>')
 def add_d(p_name):

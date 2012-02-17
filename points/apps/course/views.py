@@ -62,7 +62,7 @@ def display_c(c_name,id):
 	
 @expose('/course/delete_c/<id>')
 def delete_c(id):
-	c=course.get(int(id))
+	c=mcourses.get(int(id))
 	c.delete()
 	return '<a href="/">删除完成</a>'
 ######################################

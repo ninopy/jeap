@@ -3,7 +3,7 @@ from uliweb.orm import *
 
 class mpoints(Model):
 	p_name    = Field(CHAR)
-	p_desc 	  = Field(str)
+	p_desc 	  = Field(TEXT)
 	p_av_addr = Field(CHAR)
 
 class mdeps(Model):

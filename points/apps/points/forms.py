@@ -4,7 +4,7 @@ from uliweb import settings
 
 class PointsForm(Form):
 	p_name    = StringField(label="知识点名字", required=True)	
-	p_desc    = TextField(label="知识点描述", required=True)	
+	p_desc    = TextField(label="知识点描述", required=True,cols=200)	
 	p_av_addr = StringField(label="知识点音视频网址")	
 
 class DepsForm(Form):
