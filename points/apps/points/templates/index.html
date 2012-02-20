@@ -14,6 +14,13 @@
 			<tr><td> </td></tr> 
            </table>
 	  </div>
+	    <table class="table table-bordered table-striped">  
+		   <tbody>
+			{{for n in mains:}}
+			<tr><td> {{=n.username}}</td><td>于{{=n.datetime}}</td><td>{{=n.action}}</td><td>{{=n.objs}}</td></tr>
+			{{pass}}
+		   </tbody>
+		</table>
 	 </div>
 	</div>
 

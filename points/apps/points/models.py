@@ -9,4 +9,9 @@ class mpoints(Model):
 class mdeps(Model):
 	d_name           = Field(CHAR)
 	d_parent_name    = Field(CHAR)
-	
+
+class events(Model):
+	username = Field(CHAR)
+	action   = Field(CHAR)
+	objs     = Field(CHAR)
+	datetime = Field(datetime.datetime, auto_now_add=True)	
