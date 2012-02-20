@@ -107,12 +107,12 @@ def add_cc(c_name):
                 n = cdc(**form.data)
                 n.c_name = c_name
                 n.save()
-                return '<a href="/">添加完成</a>'
                 ne = events()
                 ne.username = request.user
                 ne.action = '增加了课程依赖'
                 ne.objs = c_name
                 ne.save()
+                return '<a href="/">添加完成</a>'
             else:
                 message='错误'
                 return {'form':form}
