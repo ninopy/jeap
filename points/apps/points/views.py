@@ -9,11 +9,14 @@ from forms import DepsForm
 from uliweb import function
 require_login = function('require_login')
 from uliweb.contrib.auth.views  import login
+from course.models import mcourses
 
 @expose('/')
 def index():
-	mains = events.all().order_by(events.c.datetime.desc()).limit(10)
-	return {'mains':mains}
+	event = events.all().order_by(events.c.datetime.desc()).limit(10)
+	courses = mcourses.all().order_by(mcourses.c.id.desc()).limit(10)
+	points = mpoints.all().order_by(mpoints.c.id.desc()).limit(10)
+	return {'event':event,'courses':courses,'points':points}
 
 @expose('/points/')
 def index_p():

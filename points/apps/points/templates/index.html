@@ -4,24 +4,61 @@
 {{block content}}
 
 
-   <div class="row">
-	<div class="span10">
+  <div class="row"> 
+	<div class="span11">
 	  <div class="well">
-	    大智弱愚，普济群生 
           <table>
 			<tr><td>本网站为开源自助型学科建设网站，以总结课程、项目、岗位的知识点为主；</p>
 				帮助新手整理思路达到快速学习总结的目的。</td></tr>
 			<tr><td> </td></tr> 
            </table>
 	  </div>
+	 </div>
+ </div>
+
+  <div class="row">
+	<div class="span5 ">
+	  <div class="well">
+			最近添加的课程
+			<hr>
 	    <table class="table table-bordered table-striped">  
 		   <tbody>
-			{{for n in mains:}}
+			{{for n in courses:}}
+			<tr><td><a href=/course/display_c/{{=n.c_name}}/{{=n.id}}>{{=n.c_name}}</a ></td></tr>
+			{{pass}}
+		   </tbody>
+		</table>
+	  </div>
+	  </div> <!--span5--> 
+		
+	
+	<div class="span5 ">
+	   <div class="well">
+			最近添加的知识点
+			<hr>
+	    <table class="table table-bordered table-striped">  
+		   <tbody>
+			{{for n in points:}}
+			<tr><td><a href=/points/display_p/{{=n.p_name}}/{{=n.id}}> {{=n.p_name}}</a></td></tr>
+			{{pass}}
+		   </tbody>
+		</table>
+		
+	   </div>
+	</div> <!--span5-->
+	
+ </div> <!--row-->
+
+	<div class="row">
+	  <div class="well">
+      <table class="table table-bordered table-striped">  
+		   <tbody>
+			{{for n in event:}}
 			<tr><td> {{=n.username}}</td><td>于{{=n.datetime}}</td><td>{{=n.action}}</td><td>{{=n.objs}}</td></tr>
 			{{pass}}
 		   </tbody>
 		</table>
-	 </div>
 	</div>
+ </div> <!--row-->
 
 {{end}}
