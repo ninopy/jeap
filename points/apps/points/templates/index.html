@@ -24,7 +24,7 @@
 	    <table class="table table-bordered table-striped">  
 		   <tbody>
 			{{for n in courses:}}
-			<tr><td><a href=/course/display_c/{{=n.c_name}}/{{=n.id}}>{{=n.c_name}}</a ></td></tr>
+			<tr><td><a href='/course/display_c/{{=n.c_name}}/{{=n.id}}'>{{=n.c_name}}</a ></td></tr>
 			{{pass}}
 		   </tbody>
 		</table>
@@ -39,7 +39,7 @@
 	    <table class="table table-bordered table-striped">  
 		   <tbody>
 			{{for n in points:}}
-			<tr><td><a href=/points/display_p/{{=n.p_name}}/{{=n.id}}> {{=n.p_name}}</a></td></tr>
+			<tr><td><a href='/points/display_p/{{=n.p_name}}/{{=n.id}}'> {{=n.p_name}}</a></td></tr>
 			{{pass}}
 		   </tbody>
 		</table>

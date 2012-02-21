@@ -26,10 +26,12 @@
 				</tr>
 	     </table>
 			<table class="table table-striped table-bordered table-condensed">
-				<td><a class="btn btn-primary" href=/points/add_d/{{=p.p_name}}>添加依赖</a>
-				<td><a class="btn btn-primary" href=/points/edit_p/{{=p.p_name}}/{{=p.id}}><i class="icon-pencil"></i> 修改知识点</a>
-				<td><a class ="btn btn-danger" href=/points/delete_p/{{=p.id}}><i class="icon-trash"></i>删除知识点</a>
+				<td><a class="btn btn-primary" href='/points/add_d/{{=p.p_name}}'>添加依赖</a>
+				<td><a class="btn btn-primary" href='/points/edit_p/{{=p.p_name}}/{{=p.id}}'><i class="icon-pencil"></i> 修改知识点</a>
+				<td><a class ="btn btn-danger" href='/points/delete_p/{{=p.id}}'><i class="icon-trash"></i>删除知识点</a>
 	     </table>
+		<hr>		
+			感谢 {{=p.adminname}} 对本知识点管理维护
        </div> 
      
 

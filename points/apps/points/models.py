@@ -5,6 +5,8 @@ class mpoints(Model):
 	p_name    = Field(CHAR)
 	p_desc 	  = Field(TEXT)
 	p_av_addr = Field(CHAR)
+	adminname = Field(CHAR)
+	status    = Field(CHAR)
 
 class mdeps(Model):
 	d_name           = Field(CHAR)

@@ -34,14 +34,15 @@ def add_c():
                 n = mcourses(**form.data)
                 c = mcourses.get(mcourses.c.c_name == form.data.c_name)
                 if c:
-                   return '<a href=/course/>添加错误,重名</a>'
+                   return redirect('/message/添加错误,重名')
+                n.adminname=request.user
                 n.save()
                 ne = events()
                 ne.username = request.user
                 ne.action = '增加了课程'
                 ne.objs = form.data.c_name
                 ne.save()
-                return '<a href="/">添加完成</a>'
+                return redirect('/message/添加完成')
             else:
                 message='错误'
                 return {'form':form}
@@ -50,6 +51,9 @@ def add_c():
 def edit_c(c_name,id):
     if require_login():
           return redirect(url_for(login))
+    c = mcourses.get(mcourses.c.id == id)
+    if cmp(c.adminname,request.user.username):
+        return redirect('/message/您不是该课程的管理者')
     if request.method == 'GET': 
 		c = mcourses.get(mcourses.c.id == id)
 		form = CoursesForm(data ={'c_name':c.c_name,'c_desc':c.c_desc})
@@ -66,7 +70,7 @@ def edit_c(c_name,id):
                 ne.action = '修改了课程'
                 ne.objs = form.data.c_name
                 ne.save()
-                return '<a href="/">添加完成</a>'
+                return redirect('/message/添加完成')
             else:
                 message='错误'
                 return {'form':form}
@@ -86,13 +90,15 @@ def delete_c(id):
     if require_login():
         return redirect(url_for(login))
     c=mcourses.get(int(id))
+    if cmp(c.adminname,request.user.username):
+        return redirect('/message/您不是该课程的管理者')
     c.delete()
     ne = events()
     ne.username = request.user
     ne.action = '删除了课程'
     ne.objs = c.c_name
     ne.save()
-    return '<a href="/">删除完成</a>'
+    return redirect('/message/删除完成')
 ######################################
 @expose('/course/add_cc/<c_name>')
 def add_cc(c_name):
@@ -112,7 +118,7 @@ def add_cc(c_name):
                 ne.action = '增加了课程依赖'
                 ne.objs = c_name
                 ne.save()
-                return '<a href="/">添加完成</a>'
+                return redirect('/message/添加完成')
             else:
                 message='错误'
                 return {'form':form}
@@ -135,7 +141,7 @@ def add_cp(c_name):
                 ne.action = '增加了知识点依赖'
                 ne.objs = c_name
                 ne.save()
-                return '<a href="/">添加完成</a>'
+                return redirect('/message/添加完成')
             else:
                 message='错误'
                 return {'form':form}

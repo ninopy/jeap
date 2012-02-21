@@ -21,7 +21,7 @@
          <a  class="btn" href=/points/add_p>新建知识点</a>  
          <a  class="btn" href=/course/add_c>新建课程</a> 
                 {{if hasattr(request, 'user') and request.user:}}
-                    欢迎{{=request.user.username}}  <a class="btn" href="/logout">退出</a>
+                    <a class="btn" href=>欢迎{{=request.user.username}}</a>  <a class="btn" href="/logout">退出</a>
                 {{else:}}
                     <a class="btn" href="/login">登录</a>  <a class="btn" href="/register">注册</a>
                 {{pass}}

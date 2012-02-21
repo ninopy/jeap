@@ -18,6 +18,10 @@ def index():
 	points = mpoints.all().order_by(mpoints.c.id.desc()).limit(10)
 	return {'event':event,'courses':courses,'points':points}
 
+@expose('/message/<m>')
+def message(m):
+	return {'m':m}
+
 @expose('/points/')
 def index_p():
 	points = mpoints.all()
@@ -37,15 +41,16 @@ def add_p():
                 n = mpoints(**form.data)
                 p = mpoints.get(mpoints.c.p_name == form.data.p_name)
                 if p:
-                    return '<a href=/points/>添加错误，重名</a>'
+                    return redirect('/message/添加错误，重名')
+                n.status = '开启'
+                n.adminname = request.user
                 n.save()
                 ne = events()
                 ne.username = request.user
                 ne.action = '增加了知识点'
                 ne.objs = form.data.p_name
                 ne.save()
-
-                return '<a href="/points/">添加完成</a>'
+                return redirect('/message/添加完成') 
             else:
                 message='错误'
                 return {'form':form}
@@ -54,6 +59,9 @@ def add_p():
 def edit_p(p_name,id):
 	if require_login():
 		return redirect(url_for(login))
+	p = mpoints.get(mpoints.c.id == id)
+	if cmp(p.adminname,request.user.username):
+		return redirect('/message/您不是该知识点的管理者')
 	from forms import PointsForm
 	if request.method == 'GET': 
 		p = mpoints.get(mpoints.c.id == id)
@@ -73,7 +81,7 @@ def edit_p(p_name,id):
                 ne.action = '修改了知识点'
                 ne.objs = form.data.p_name
                 ne.save()
-                return '<a href="/">添加完成</a>'
+                return redirect('/message/添加完成')
             else:
                 message='错误'
                 return {'form':form}
@@ -91,14 +99,16 @@ def display_p(p_name,id):
 def delete_p(id):
 	if require_login():
 		return redirect(url_for(login))
-	p=mpoints.get(int(id))
+	p = mpoints.get(mpoints.c.id == id)
+	if cmp(p.adminname,request.user.username):
+		return redirect('/message/您不是该知识点的管理者')
 	p.delete()
 	ne = events()
 	ne.username = request.user
 	ne.action = '删除了知识点'
 	ne.objs = p.p_name
 	ne.save()
-	return '<a href="/">ok</a>'
+	return redirect('/message/删除成功')
 ######################################
 @expose('/points/add_d/<p_name>')
 def add_d(p_name):
@@ -118,7 +128,7 @@ def add_d(p_name):
                 ne.action = '增加了知识点依赖'
                 ne.objs = p_name
                 ne.save()
-                return '<a href="/">添加完成</a>'
+                return redirect('/message/添加完成')
             else:
                 message='错误'
                 return {'form':form}

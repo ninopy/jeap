@@ -4,6 +4,9 @@ from uliweb.orm import *
 class mcourses(Model):
 	c_name    = Field(CHAR)
 	c_desc 	  = Field(TEXT)
+	status    = Field(CHAR)
+	adminname = Field(CHAR)
+
 
 class mc_deps_ps(Model): # course depend points
 	c_name      = Field(CHAR)
