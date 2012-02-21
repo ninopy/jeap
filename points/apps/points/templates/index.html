@@ -5,14 +5,8 @@
 
 
   <div class="row"> 
-	<div class="span11">
-	  <div class="well">
-          <table>
-			<tr><td>本网站为开源自助型学科建设网站，以总结课程、项目、岗位的知识点为主；</p>
-				帮助新手整理思路达到快速学习总结的目的。</td></tr>
-			<tr><td> </td></tr> 
-           </table>
-	  </div>
+	<div class="span10">
+	  <pre>本网站为开源自助型学科建设网站，以总结课程、项目、岗位的知识点为主；</p>帮助新手整理思路达到快速学习总结的目的。</pre>
 	 </div>
  </div>
 
@@ -50,13 +44,11 @@
  </div> <!--row-->
 
 	<div class="row">
-	  <div class="well">
-      <table class="table table-bordered table-striped">  
-		   <tbody>
+	<div class="span10">
+      <table class="table table-bordered table-striped" >
 			{{for n in event:}}
-			<tr><td> {{=n.username}}</td><td>于{{=n.datetime}}</td><td>{{=n.action}}</td><td>{{=n.objs}}</td></tr>
+			<tr style="font-size:12px"><td> {{=n.username}}</td><td>于{{=n.datetime}}</td><td>{{=n.action}}</td><td>{{=n.objs}}</td></tr>
 			{{pass}}
-		   </tbody>
 		</table>
 	</div>
  </div> <!--row-->
