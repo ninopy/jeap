@@ -33,7 +33,7 @@
 			感谢 {{=p.adminname}} 对本知识点管理维护</br>
 		<hr>		
 			{{for co in comm:}}
-				{{=co.username}}于{{=co.datetime}}发表了：
+				{{=co.username}}于{{=co.datetime}}发表了：<a href='/points/delete_pco/{{=co.id}}'>删除</a>
 			    <div class="well">	
 				{{<<co.comm_desc}}</div>
 			{{pass}} 

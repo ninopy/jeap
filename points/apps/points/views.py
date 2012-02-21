@@ -108,7 +108,19 @@ def display_p(p_name,id):
 	comm = comments.filter(comments.c.comm_objs==p_name)
 	form = CommForm()
 	return {'p':p,'pd':pd,'cd':cd,'comm':comm,'form':form}
-	
+
+@expose('/points/delete_pco/<id>')
+def delete_pco(id):
+	if require_login():
+		return redirect(url_for(login))
+	co = comments.get(comments.c.id == id)
+	p = mpoints.get(mpoints.c.p_name == co.comm_objs)
+	if cmp(p.adminname,request.user.username):
+		return redirect('/message/您不是该主题的管理者')
+	co = comments.get(comments.c.id == id)
+	co.delete()
+	return redirect('/message/删除成功')
+
 @expose('/points/delete_p/<id>')
 def delete_p(id):
 	if require_login():

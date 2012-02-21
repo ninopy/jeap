@@ -33,7 +33,7 @@
 			感谢 {{=c.adminname}} 对本课程的管理维护
 		        <hr>
             {{for co in comm:}}
-                {{=co.username}}于{{=co.datetime}}发表了：
+                {{=co.username}}于{{=co.datetime}}发表了： <a href='/course/delete_cco/{{=co.id}}'>删除</a>
                 <div class="well">
                 {{<<co.comm_desc}}</div>
             {{pass}}
