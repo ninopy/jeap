@@ -30,10 +30,20 @@
 				<td><a class="btn btn-primary" href='/points/edit_p/{{=p.p_name}}/{{=p.id}}'><i class="icon-pencil"></i> 修改知识点</a>
 				<td><a class ="btn btn-danger" href='/points/delete_p/{{=p.id}}'><i class="icon-trash"></i>删除知识点</a>
 	     </table>
+			感谢 {{=p.adminname}} 对本知识点管理维护</br>
 		<hr>		
-			感谢 {{=p.adminname}} 对本知识点管理维护
-       </div> 
-     
+			{{for co in comm:}}
+				{{=co.username}}于{{=co.datetime}}发表了：
+			    <div class="well">	
+				{{<<co.comm_desc}}</div>
+			{{pass}} 
+     	{{use "xheditor"}}
+       <div class="form" style="width:700px;text-align:left ">
+		 {{<<form}} 
+	   </div>
+	
+    </div> 
+        
 
       <div class="span3"> 
           <code>
@@ -43,5 +53,21 @@
 	  	  {{pass}}
        </div> 
 
-      </div> 
+     
+  </div> 
+
+
+{{include "inc_xheditor_plugins.html"}}
+<script type="text/javascript">
+    $(function(){
+        $('textarea').xheditor({
+            tools:'Cut,Copy,Paste,Pastetext,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,SelectAll,Removeformat,|,Align,List,Outdent,Indent,|,Link,Unlink,Anchor,Img,Flash,Hr,Emot,Table,Code,Quote,|,About',
+            skin:'default',
+            upFlashExt:"swf",
+            plugins:plugins,
+            height:150,
+            width:450,
+        });
+    });
+</script>
 {{end}}

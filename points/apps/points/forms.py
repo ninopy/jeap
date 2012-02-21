@@ -9,3 +9,6 @@ class PointsForm(Form):
 
 class DepsForm(Form):
 	d_parent_name = StringField(label="依赖的知识点名称")
+
+class CommForm(Form):
+	comm_desc = TextField(label="留下您的建议",required=True,cols=200,rows=6)

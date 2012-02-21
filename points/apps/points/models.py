@@ -16,4 +16,10 @@ class events(Model):
 	username = Field(CHAR)
 	action   = Field(CHAR)
 	objs     = Field(CHAR)
-	datetime = Field(datetime.datetime, auto_now_add=True)	
+	datetime = Field(datetime.datetime, auto_now_add=True)
+
+class comments(Model):	
+	username      = Field(CHAR)
+	comm_objs     = Field(CHAR)
+	comm_desc 	  = Field(TEXT)
+	datetime = Field(datetime.datetime, auto_now_add=True)

@@ -4,8 +4,10 @@ from uliweb import settings
 from models import mpoints
 from models import mdeps
 from models import events
+from models import comments
 from uliweb.orm import get_model
 from forms import DepsForm
+from forms import CommForm
 from uliweb import function
 require_login = function('require_login')
 from uliweb.contrib.auth.views  import login
@@ -77,7 +79,7 @@ def edit_p(p_name,id):
                 n.p_av_addr= form.data.p_av_addr
                 n.save()
                 ne = events()
-                ne.username = request.user
+                ne.username = request.user.username
                 ne.action = '修改了知识点'
                 ne.objs = form.data.p_name
                 ne.save()
@@ -90,10 +92,22 @@ def edit_p(p_name,id):
 
 @expose('/points/display_p/<p_name>/<id>')
 def display_p(p_name,id):
+	if request.method == 'POST':
+		form = CommForm()
+		flag = form.validate(request.params)
+		if flag:
+			co = comments(**form.data)
+			co.username = request.user.username
+			co.comm_objs = p_name
+			co.save()
 	pd = mdeps.filter(mdeps.c.d_name==p_name)
 	cd = mdeps.filter(mdeps.c.d_parent_name==p_name)
 	p = mpoints.get(mpoints.c.p_name == p_name)
-	return {'p':p,'pd':pd,'cd':cd}
+	if not p:
+		return redirect('/message/该知识点不存在，您可以添加')
+	comm = comments.filter(comments.c.comm_objs==p_name)
+	form = CommForm()
+	return {'p':p,'pd':pd,'cd':cd,'comm':comm,'form':form}
 	
 @expose('/points/delete_p/<id>')
 def delete_p(id):
@@ -124,7 +138,7 @@ def add_d(p_name):
                 n.d_name = p_name
                 n.save()
                 ne = events()
-                ne.username = request.user
+                ne.username = request.user.username
                 ne.action = '增加了知识点依赖'
                 ne.objs = p_name
                 ne.save()

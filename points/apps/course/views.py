@@ -9,11 +9,11 @@ from forms import C_Deps_PForm as CDPForm
 from forms import C_Deps_CForm as CDCForm
 from forms import CoursesForm
 from points.models import events
-
+from points.models import comments
 from uliweb import function
 require_login = function('require_login')
 from uliweb.contrib.auth.views  import login
-
+from points.forms import CommForm
 
 
 @expose('/course/')
@@ -66,7 +66,7 @@ def edit_c(c_name,id):
                 n.c_desc = form.data.c_desc
                 n.save()
                 ne = events()
-                ne.username = request.user
+                ne.username = request.user.username
                 ne.action = '修改了课程'
                 ne.objs = form.data.c_name
                 ne.save()
@@ -79,11 +79,23 @@ def edit_c(c_name,id):
 
 @expose('/course/display_c/<c_name>/<id>')
 def display_c(c_name,id):
-	p_cdc = cdc.filter(cdc.c.c_name==c_name)
-	c_cdc = cdc.filter(cdc.c.c_parent_c==c_name)
-	c = mcourses.get(mcourses.c.c_name == c_name)
-	p_cdp = cdp.filter(cdp.c.c_name==c_name)
-	return {'c':c,'p_cdc':p_cdc,'c_cdc':c_cdc,'p_cdp':p_cdp}
+    if request.method == 'POST':
+        form = CommForm()
+        flag = form.validate(request.params)
+        if flag:
+            co = comments(**form.data)
+            co.username = request.user.username
+            co.comm_objs = c_name
+            co.save()
+    p_cdc = cdc.filter(cdc.c.c_name==c_name)
+    c_cdc = cdc.filter(cdc.c.c_parent_c==c_name)
+    c = mcourses.get(mcourses.c.c_name == c_name)
+    if not c :
+           return redirect('/message/该课程不存在，您可以添加')	
+    p_cdp = cdp.filter(cdp.c.c_name==c_name)
+    comm = comments.filter(comments.c.comm_objs==c_name)
+    form = CommForm()
+    return {'c':c,'p_cdc':p_cdc,'c_cdc':c_cdc,'p_cdp':p_cdp,'comm':comm,'form':form}
 	
 @expose('/course/delete_c/<id>')
 def delete_c(id):
@@ -114,7 +126,7 @@ def add_cc(c_name):
                 n.c_name = c_name
                 n.save()
                 ne = events()
-                ne.username = request.user
+                ne.username = request.user.username
                 ne.action = '增加了课程依赖'
                 ne.objs = c_name
                 ne.save()
@@ -137,7 +149,7 @@ def add_cp(c_name):
                 n.c_name = c_name
                 n.save()
                 ne = events()
-                ne.username = request.user
+                ne.username = request.user.username
                 ne.action = '增加了知识点依赖'
                 ne.objs = c_name
                 ne.save()

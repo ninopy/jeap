@@ -26,12 +26,22 @@
 		
 			<table class="table table-striped table-bordered table-condensed">
    		        <td><a class="btn btn-primary" href='/course/add_cc/{{=c.c_name}}'>添加课程依赖</a>
-				<td><a class="btn btn-primary" href='/course/add_cp/{{=c.c_name}}'>添加知识点</a>
+				<td><a class="btn btn-primary" href='/course/add_cp/{{=c.c_name}}'>添加知识点依赖</a>
 				<td><a class="btn btn-primary" href='/course/edit_c/{{=c.c_name}}/{{=c.id}}'><i class="icon-pencil"></i> 修改本课程</a>
 				<td><a class ="btn btn-danger" href='/course/delete_c/{{=c.id}}'><i class="icon-trash"></i>删除课程</a>
 	        </table>
-		<hr>
 			感谢 {{=c.adminname}} 对本课程的管理维护
+		        <hr>
+            {{for co in comm:}}
+                {{=co.username}}于{{=co.datetime}}发表了：
+                <div class="well">
+                {{<<co.comm_desc}}</div>
+            {{pass}}
+        {{use "xheditor"}}
+       		<div class="form" style="width:700px;text-align:left ">
+            {{<<form}} 
+           </div>
+
        </div> 
      
 
@@ -43,5 +53,21 @@
 	  	  {{pass}}
        </div> 
 
-      </div> 
+      </div>
+
+
+{{include "inc_xheditor_plugins.html"}}
+<script type="text/javascript">
+    $(function(){
+        $('textarea').xheditor({
+            tools:'Cut,Copy,Paste,Pastetext,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,SelectAll,Removeformat,|,Align,List,Outdent,Indent,|,Link,Unlink,Anchor,Img,Flash,Hr,Emot,Table,Code,Quote,|,About',
+            skin:'default',
+            upFlashExt:"swf",
+            plugins:plugins,
+            height:150,
+            width:450,
+        });
+    });
+</script>
+ 
 {{end}}
