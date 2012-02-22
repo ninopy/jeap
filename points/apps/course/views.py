@@ -52,7 +52,7 @@ def edit_c(c_name,id):
     if require_login():
           return redirect(url_for(login))
     c = mcourses.get(mcourses.c.id == id)
-    if cmp(c.adminname,request.user.username):
+    if cmp(c.adminname,request.user.username) and (request.user.is_superuser == False):
         return redirect('/message/您不是该课程的管理者')
     if request.method == 'GET': 
 		c = mcourses.get(mcourses.c.id == id)
@@ -102,7 +102,7 @@ def delete_c(id):
     if require_login():
         return redirect(url_for(login))
     c=mcourses.get(int(id))
-    if cmp(c.adminname,request.user.username):
+    if cmp(c.adminname,request.user.username) and (request.user.is_superuser == False):
         return redirect('/message/您不是该课程的管理者')
     c.delete()
     ne = events()
@@ -118,7 +118,7 @@ def delete_cco(id):
         return redirect(url_for(login))
     co = comments.get(comments.c.id == id)
     p = mcourses.get(mcourses.c.c_name == co.comm_objs)
-    if cmp(p.adminname,request.user.username):
+    if cmp(p.adminname,request.user.username)and (request.user.is_superuser == False):
         return redirect('/message/您不是该主题的管理者')
     co = comments.get(comments.c.id == id)
     co.delete()

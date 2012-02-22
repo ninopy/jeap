@@ -62,7 +62,7 @@ def edit_p(p_name,id):
 	if require_login():
 		return redirect(url_for(login))
 	p = mpoints.get(mpoints.c.id == id)
-	if cmp(p.adminname,request.user.username):
+	if cmp(p.adminname,request.user.username) and (request.user.is_superuser == False):
 		return redirect('/message/您不是该知识点的管理者')
 	from forms import PointsForm
 	if request.method == 'GET': 
@@ -115,7 +115,7 @@ def delete_pco(id):
 		return redirect(url_for(login))
 	co = comments.get(comments.c.id == id)
 	p = mpoints.get(mpoints.c.p_name == co.comm_objs)
-	if cmp(p.adminname,request.user.username):
+	if cmp(p.adminname,request.user.username) and (request.user.is_superuser == False) :
 		return redirect('/message/您不是该主题的管理者')
 	co = comments.get(comments.c.id == id)
 	co.delete()
@@ -126,7 +126,7 @@ def delete_p(id):
 	if require_login():
 		return redirect(url_for(login))
 	p = mpoints.get(mpoints.c.id == id)
-	if cmp(p.adminname,request.user.username):
+	if cmp(p.adminname,request.user.username) and (request.user.is_superuser == False):
 		return redirect('/message/您不是该知识点的管理者')
 	p.delete()
 	ne = events()
