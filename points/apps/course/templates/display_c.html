@@ -9,7 +9,7 @@
              <code>  {{=c.c_name}}依赖以下课程： </code>
             </p> 
 	  		{{for np in p_cdc:}}
-				<td> {{=np.c_parent_c}}</td>
+				<td><a href ='/course/display_c/{{=np.c_parent_c}}/0' > {{=np.c_parent_c}}</a></td>
 	  		{{pass}} 
         </div> 
 

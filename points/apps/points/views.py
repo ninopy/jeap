@@ -29,12 +29,13 @@ def index_p():
 	points = mpoints.all()
 	return {'points':points}
 
-@expose('/points/add_p')
-def add_p():
+@expose('/points/add_p/<name>')
+def add_p(name):
         if require_login():
 			return redirect(url_for(login))
         from forms import PointsForm
         form = PointsForm()
+        form.p_name.data = name
         if request.method == 'GET':
             return {'form':form}
         elif request.method == 'POST':
@@ -104,7 +105,7 @@ def display_p(p_name,id):
 	cd = mdeps.filter(mdeps.c.d_parent_name==p_name)
 	p = mpoints.get(mpoints.c.p_name == p_name)
 	if not p:
-		return redirect('/message/该知识点不存在，您可以添加')
+		return redirect('/points/add_p/%s' % p_name)
 	comm = comments.filter(comments.c.comm_objs==p_name)
 	form = CommForm()
 	return {'p':p,'pd':pd,'cd':cd,'comm':comm,'form':form}
