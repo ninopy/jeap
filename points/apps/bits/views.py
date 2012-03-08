@@ -198,7 +198,7 @@ def add_b(reg_name,reg_id):
             if flag:
                 n = mbits(**form.data)
                 b = mbits.filter(mbits.c.bits_name == form.data.bits_name)\
-                         .filter(mbits.c.reg_id == regid)
+                         .filter(mbits.c.reg_id == reg_id)
                 for b1 in b:
                     return redirect('/message/添加错误，重名') 
                 n.reg_name = reg_name
