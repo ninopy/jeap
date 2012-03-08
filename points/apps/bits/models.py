@@ -1,6 +1,15 @@
 #coding=utf-8
 from uliweb.orm import *
 
+class msoc(Model):
+	soc_name=Field(CHAR)
+
+class mdevice(Model):
+	soc_name     = Field(CHAR)
+	device_name  = Field(CHAR)	
+	device_vpid  = Field(CHAR)
+	adminname    = Field(CHAR)
+
 class mreg(Model):
 	reg_name     = Field(CHAR)
 	reg_address  = Field(CHAR)

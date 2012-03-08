@@ -2,9 +2,15 @@
 from uliweb.form import *
 from uliweb import settings
 
-class RegForm(Form):
+
+class SocForm(Form):
+	soc_name = StringField(label="SoC名称")
+
+class DeviceForm(Form):
     device_name  = StringField(label="所属设备名称",required=True)
-    device_id    = StringField(label="所属设备ID号")
+    device_vpid  = StringField(label="所属设备厂商和产品ID")
+
+class RegForm(Form):
     reg_name     = StringField(label="寄存器名字",required=True)
     reg_address  = StringField(label="寄存器的偏移地址")
     reg_desc     = StringField(label="寄存器说明",required=True)

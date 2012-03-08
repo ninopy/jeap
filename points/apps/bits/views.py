@@ -1,10 +1,14 @@
 #coding=utf-8
 from uliweb import expose
 from uliweb import settings
+from models import msoc
+from models import mdevice
 from models import mreg
 from models import mbits
 from models import mmeanings
 from uliweb.orm import get_model
+from forms import SocForm
+from forms import DeviceForm
 from forms import RegForm
 from forms import BitsForm
 from forms import MeaningsForm
@@ -16,31 +20,97 @@ from points.models import events
 
 
 @expose('/regs/')
-def index_r():
-	regs = mreg.all()
-	return {'regs':regs}
+def index_device():
+	devices = mdevice.all()
+	soc = msoc.all()
+	return {'devices':devices,'soc':soc}
 
-@expose('/regs/add_r/<reg_name>')
-def add_r(reg_name):
+
+@expose('/regs/add_soc')
+def add_soc():
+    if require_login():
+        return redirect(url_for(login))
+    form = SocForm()
+    if request.method == 'GET':
+	    return {'form':form}
+    elif request.method == 'POST':
+        flag = form.validate(request.params)
+        if flag:
+            n = msoc(**form.data)
+            s = msoc.get(msoc.c.soc_name == form.data.soc_name)		
+            if s: 
+                return redirect('/message/添加错误，重名') 
+        n.save()
+        return redirect('/regs/')
+
+
+@expose('/regs/display_soc/<soc_name>/<id>')
+def display_soc(soc_name,id):
+	s = msoc.get(msoc.c.id == id)
+	d = mdevice.filter(mdevice.c.soc_name == soc_name)
+	return {'s':s,'d':d}
+
+@expose('/regs/delete_soc/<id>')
+def delete_soc(id):
+    if require_login():
+         return redirect(url_for(login))
+    if (request.user.is_superuser == False):
+        return redirect('/message/只有管理员才能删除SOC')
+    s = msoc.get(msoc.c.id == id)
+    s.delete()
+    return redirect('/message/删除完成')
+
+
+@expose('/regs/add_device/<soc_name>/<id>')
+def add_device(soc_name,id):
+    if require_login():
+        return redirect(url_for(login))
+    form = DeviceForm()
+    if request.method == 'GET':
+        return {'form':form}
+    elif request.method == 'POST':
+        flag = form.validate(request.params)
+        if flag:
+            n = mdevice(**form.data)
+            s = mdevice.filter(mdevice.c.device_name == form.data.device_name)\
+                       .filter(mdevice.c.soc_name == soc_name)		
+            for s1 in s:
+                return redirect('/message/添加错误，重名') 
+        n.soc_name=soc_name
+        n.adminname = request.user
+        n.save()
+        return redirect('/regs/')
+
+@expose('/regs/display_device/<device_name>/<id>')
+def display_device(device_name,id):
+	d = mdevice.get(mdevice.c.id == id)
+	r = mreg.filter(mreg.c.device_id == id)
+	return {'r':r,'d':d}
+
+##############################################333
+
+@expose('/regs/add_r/<device_name>/<device_id>')
+def add_r(device_name,device_id):
         if require_login():
             return redirect(url_for(login))
         form = RegForm()
         if request.method == 'GET':
-            form.reg_name.data = reg_name
             return {'form':form}
         elif request.method == 'POST':
             flag = form.validate(request.params)
             if flag:
                 n = mreg(**form.data)
-                r = mreg.get(mreg.c.reg_name == form.data.reg_name)
-                if r:
+                r = mreg.filter(mreg.c.reg_name == form.data.reg_name).filter(mreg.c.device_id==device_id)
+                for r1 in r:
                     return redirect('/message/添加错误，重名') 
                 n.adminname = request.user
+                n.device_name = device_name
+                n.device_id   = device_id
                 n.save()
                 ne = events()
                 ne.username = request.user
                 ne.action = '增加了寄存器'
-                ne.objs = form.data.p_name
+                ne.objs = form.data.reg_name
                 ne.save()
                 return redirect('/message/添加完成') 
             else:

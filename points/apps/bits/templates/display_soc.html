@@ -1,0 +1,46 @@
+{{extend "base.html"}}
+{{block content}}
+
+
+ <!-- Example row of columns --> 
+      <div class="row"> 
+
+         <div class="span6">
+
+			<table class="table table-striped table-bordered table-condensed">
+				<tr>
+				<td>{{=s.soc_name}} 的设备列表</td>
+				</tr>
+	     </table>
+			<table class="table table-striped table-bordered table-condensed">
+			{{for n in d:}}
+				<tr>
+					<td><a href='/regs/display_device/{{=n.device_name}}/{{=n.id}}'>{{=n.device_name}}</a></td>
+					<td><a href='/regs/delete_device/{{=n.id}}'>删除</a></td>
+				</tr>
+			{{pass}}
+	     </table>
+			<table class="table table-striped table-bordered table-condensed">
+				<td><a class="btn btn-primary" href='/regs/add_device/{{=s.soc_name}}/{{=s.id}}'>添加设备</a>
+				<td><a class ="btn btn-danger" href='/regs/delete_soc/{{=s.id}}'><i class="icon-trash"></i>删除SOC</a>
+	     </table>
+		<hr>		
+     
+      </div> <!--span6-->
+  </div>  <!--row-->
+
+
+{{include "inc_xheditor_plugins.html"}}
+<script type="text/javascript">
+    $(function(){
+        $('textarea').xheditor({
+            tools:'Cut,Copy,Paste,Pastetext,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,SelectAll,Removeformat,|,Align,List,Outdent,Indent,|,Link,Unlink,Anchor,Img,Flash,Hr,Emot,Table,Code,Quote,|,About',
+            skin:'default',
+            upFlashExt:"swf",
+            plugins:plugins,
+            height:150,
+            width:450,
+        });
+    });
+</script>
+{{end}}

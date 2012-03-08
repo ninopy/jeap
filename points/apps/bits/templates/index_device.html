@@ -1,0 +1,45 @@
+   {{extend "base.html"}}  
+{{block content}}
+
+
+
+  <div class="row">
+  <div class="span4">
+	<div class="well">
+	<table >
+	   <hr>
+       {{count = 1}}
+            {{for n in devices:}}
+				<tr>
+				<td>{{=count}}</td> 
+				<td><a href='/regs/display_device/{{=n.device_name}}/{{=n.id}}'>{{=n.soc_name}}的{{=n.device_name}}</a ></td> 
+				</tr>
+               {{count = count +1}} 
+            {{pass}}
+		
+	 </table>
+     </div>
+     </div>
+  <div class="span4">
+	<div class="well">
+	<a href='/regs/add_soc'>新添加soc</a>
+	<hr>
+	<table >
+       {{count = 1}}
+            {{for n in soc:}}
+				<tr>
+				<td>{{=count}}</td> 
+				<td><a href='/regs/display_soc/{{=n.soc_name}}/{{=n.id}}'>{{=n.soc_name}}</a ></td> 
+				</tr>
+               {{count = count +1}} 
+            {{pass}}
+	 </table>
+     </div>
+     </div>
+  
+
+
+
+   </div>
+
+{{end}}
