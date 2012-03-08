@@ -14,10 +14,6 @@ from uliweb.contrib.auth.views  import login
 from points.models import events
 
 
-@expose('/')
-def index():
-	main = '知识点'
-	return {'main':main}
 
 @expose('/regs/')
 def index_r():
