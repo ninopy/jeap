@@ -1,0 +1,48 @@
+
+{{extend "base.html"}}
+
+{{block content}} 
+
+<div class="row">
+<div class="span4">
+<table class="table table-bordered">
+    <thead>
+    <tr>
+    <td>名称</td>
+    <td>位</td>
+    </tr>
+    </thead>
+    {{for n in b:}}
+    <tr>
+    <td>{{=n.bits_name}}</td>
+    <td>[{{=n.bits_sbit}}-{{=n.bits_ebit}}]</td>
+    </tr>
+    {{pass}}
+</table>
+</div>
+</div>
+
+
+
+
+{{use "xheditor"}}
+<div class="form" style="width:700px;text-align:left ">
+{{<<form}} 
+</div>
+
+
+{{include "inc_xheditor_plugins.html"}}
+<script type="text/javascript">
+    $(function(){
+        $('textarea').xheditor({
+            tools:'Cut,Copy,Paste,Pastetext,|,Blocktag,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,FontColor,BackColor,SelectAll,Removeformat,|,Align,List,Outdent,Indent,|,Link,Unlink,Anchor,Img,Flash,Hr,Emot,Table,Code,Quote,|,About',
+            skin:'default',
+            upFlashExt:"swf",
+            plugins:plugins,
+            height:300,
+            width:600,
+        });
+    });
+</script>
+
+{{end}}

@@ -1,0 +1,26 @@
+   {{extend "base.html"}}  
+{{block content}}
+
+
+
+  <div class="row">
+  <div class="span4">
+	<div class="well">
+	<table >
+	  <a class='btn' href='/regs/add_r/新知识点名'>添加新寄存器</a>	
+	   <hr>
+       {{count = 1}}
+            {{for n in regs:}}
+				<tr>
+				<td>{{=count}}</td> 
+				<td><a href='/regs/display_r/{{=n.reg_name}}/{{=n.id}}'>{{=n.device_name}}的{{=n.reg_name}}寄存器</a ></td> 
+				</tr>
+               {{count = count +1}} 
+            {{pass}}
+		
+	 </table>
+     </div>
+     </div>
+   </div>
+
+{{end}}
