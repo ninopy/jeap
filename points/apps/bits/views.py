@@ -142,7 +142,7 @@ def add_b(reg_name,reg_id):
                 ne.action = '增加了位说明'
                 ne.objs = reg_name
                 ne.save()
-                return redirect('/regs/display_r/%s/%s'% (reg_name,reg_id))
+                return redirect('/regs/add_b/%s/%s'% (reg_name,reg_id))
             else:
                 message='错误'
                 return {'form':form}
@@ -178,7 +178,7 @@ def add_mean(bits_name,bits_id):
                 n.bits_name = bits_name
                 n.bits_id = bits_id
                 n.save()
-                return redirect('/regs/')
+                return redirect('/regs/add_mean/%s/%s'% (bits_name,bits_id))
             else:
                 message='错误'
                 return {'form':form}
