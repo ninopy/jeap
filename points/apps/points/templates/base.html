@@ -3,6 +3,7 @@
 <title> 智普开源---知识框架</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <meta name="description" content="知识框架|Linux编程|开源站点|智普" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link href="{{=url_for_static('bootstrap/css/bootstrap.css')}}" rel="stylesheet" type="text/css" / >
 <link href="{{=url_for_static('bootstrap/css/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" / >
    <style> 
@@ -15,7 +16,6 @@
 
 
  <body data-spy="scroll" data-target=".subnav" data-offset="20">
-
        
 	<div class="navbar" >
 		<div class="navbar-inner" >
@@ -32,7 +32,11 @@
 			</ul>
     	  </div> 
        </div> 
-    </div> 
+    </div>
+
+
+ <div class="container"> 
+
 	<div class="subnav" >
     		 <ul class="nav nav-pills"> 
        			<li><a href='/'>首页</a></li> 
@@ -43,6 +47,7 @@
     </div> 
   {{block content}}{{end}}
  
+ </div> <!--container-->
 <footer class="footer">  
  <hr>
  <p> Jeap@2012    联系邮件: asmcos @ gmail </p>
