@@ -60,6 +60,18 @@ def delete_soc(id):
     s.delete()
     return redirect('/message/删除完成')
 
+@expose('/regs/delete_device/<id>')
+def delete_device(id):
+    if require_login():
+         return redirect(url_for(login))
+    d = mdevice.get(mdevice.c.id == id)
+    if cmp(d.adminname,request.user.username) and (request.user.is_superuser == False):
+        return redirect('/message/只有设备管理者才能删除')
+    d.delete()
+    return redirect('/message/删除完成')
+
+
+
 
 @expose('/regs/add_device/<soc_name>/<id>')
 def add_device(soc_name,id):
