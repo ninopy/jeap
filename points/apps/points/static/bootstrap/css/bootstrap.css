@@ -3366,3 +3366,6 @@ a.thumbnail:hover {
 .invisible {
   visibility: hidden;
 }
+.btn_new  a{float:left;margin:0 0 0 8px; text-align: center; }
+.btn_new  a{color:#fff!important; line-height: 23px; width:100px; display:inline-block; height: 25px;background: url(../img/nav_bu.png) no-repeat 0 -25px; }
+.btn_new  a:hover{color:#000!important; text-decoration:none;background: url(../img/nav_bu.png) no-repeat 0 0; }
