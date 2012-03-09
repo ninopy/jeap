@@ -13,7 +13,7 @@
             {{for n in regs:}}
 				<tr>
 				<td>{{=count}}</td> 
-				<td><a href='/regs/display_r/{{=n.reg_name}}/{{=n.id}}'>{{=n.device_name}}的{{=n.reg_name}}寄存器</a ></td> 
+				<td><a href='/regs/display_r/{{=n.id}}'>{{=n.device_name}}的{{=n.reg_name}}寄存器</a ></td> 
 				</tr>
                {{count = count +1}} 
             {{pass}}

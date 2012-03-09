@@ -159,8 +159,8 @@ def edit_r(reg_name,id):
 	
 
 
-@expose('/regs/display_r/<reg_name>/<id>')
-def display_r(reg_name,id):
+@expose('/regs/display_r/<id>')
+def display_r(id):
 	r = mreg.get(mreg.c.id == id)
 	b = mbits.filter(mbits.c.reg_id == id)
 	return {'r':r,'b':b}
