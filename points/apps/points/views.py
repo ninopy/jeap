@@ -93,22 +93,24 @@ def edit_p(p_name,id):
 
 @expose('/points/display_p/<p_name>/<id>')
 def display_p(p_name,id):
-	if request.method == 'POST':
-		form = CommForm()
-		flag = form.validate(request.params)
-		if flag:
-			co = comments(**form.data)
-			co.username = request.user.username
-			co.comm_objs = p_name
-			co.save()
-	pd = mdeps.filter(mdeps.c.d_name==p_name)
-	cd = mdeps.filter(mdeps.c.d_parent_name==p_name)
-	p = mpoints.get(mpoints.c.p_name == p_name)
-	if not p:
-		return redirect('/points/add_p/%s' % p_name)
-	comm = comments.filter(comments.c.comm_objs==p_name)
-	form = CommForm()
-	return {'p':p,'pd':pd,'cd':cd,'comm':comm,'form':form}
+    if request.method == 'POST':
+        if require_login():
+            return redirect(url_for(login))
+        form = CommForm()
+        flag = form.validate(request.params)
+        if flag:
+            co = comments(**form.data)
+            co.username = request.user.username
+            co.comm_objs = p_name
+            co.save()
+    pd = mdeps.filter(mdeps.c.d_name==p_name)
+    cd = mdeps.filter(mdeps.c.d_parent_name==p_name)
+    p = mpoints.get(mpoints.c.p_name == p_name)
+    if not p:
+        return redirect('/points/add_p/%s' % p_name)
+    comm = comments.filter(comments.c.comm_objs==p_name)
+    form = CommForm()
+    return {'p':p,'pd':pd,'cd':cd,'comm':comm,'form':form}
 
 @expose('/points/delete_pco/<id>')
 def delete_pco(id):
