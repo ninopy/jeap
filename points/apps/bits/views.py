@@ -161,9 +161,14 @@ def edit_r(reg_name,id):
 
 @expose('/regs/display_r/<id>')
 def display_r(id):
-	r = mreg.get(mreg.c.id == id)
-	b = mbits.filter(mbits.c.reg_id == id)
-	return {'r':r,'b':b}
+    ms = []
+    r = mreg.get(mreg.c.id == id)
+    b = mbits.filter(mbits.c.reg_id == id)
+    for b1 in b:
+        m = mmeanings.filter(mmeanings.c.bits_id==b1.id)
+        for m1 in m:
+            ms.append(m1)
+    return {'r':r,'b':b,'ms':ms}
 
 
 def regcal(sbit,ebit,value):
@@ -261,6 +266,19 @@ def add_mean(bits_name,bits_id):
             else:
                 message='错误'
                 return {'form':form}
+
+@expose('/regs/delete_mean/<id>')
+def delete_mean(id):
+    if require_login():
+         return redirect(url_for(login))
+    m = mmeanings.get(mmeanings.c.id == id)
+    b = mbits.get(mbits.c.id == m.bits_id)
+    r = mreg.get(mreg.c.id == b.reg_id)
+    if cmp(r.adminname,request.user.username) and (request.user.is_superuser == False):
+        return redirect('/message/您不是该知识点的管理者')
+    m.delete()
+    return redirect('/message/删除完成')
+
 
 
 

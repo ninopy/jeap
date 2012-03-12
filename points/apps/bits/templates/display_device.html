@@ -16,7 +16,7 @@
 			{{for n in r:}}
 				<tr>
 					<td><a href='/regs/display_r/{{=n.id}}'>{{=n.reg_name}}</a></td>
-					<td><a href='/regs/delete_r/{{=n.id}}'>删除</a></td>
+					<td><div class="btn_new"><a href='/regs/delete_r/{{=n.id}}'>删除</a></div></td>
 				</tr>
 			{{pass}}
 	     </table>

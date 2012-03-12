@@ -6,15 +6,16 @@
       <div class="row"> 
 
          <div class="span6">
-
+            <div class="well">
+             本程序提供寄存的具体含义查询。输入一个16进制的数字即可查询。
+             例如：（8f2a4）</p>
+             寄存器的含义是在线添加的，有些含义可能添加不全，您也可以在线添加位说明。
 			<form class="form" action="/regs/search/{{=r.id}}" method="POST">
-    				<label class="field" for="field_rvalue">请输入寄存器的值(16进制):<span class="field_required">*</span>
-						</label>
     						<input class="field" id="field_rvalue" name="rvalue" type="text" value=""></input>
 
         				<input class="button" name="submit" type="submit" value="查询"></input>
 			</form>
-
+            </div>
 
            	<!-- table border="1" class="tb" style="border-collapse: collapse; margin:0 auto" bordercolor="#FFF" -->	
 			<table class="table table-striped table-bordered table-condensed">
@@ -27,9 +28,18 @@
 			{{for n in b:}}
 				<tr>
 					<td>[{{=n.bits_sbit}}-{{=n.bits_ebit}} ]</td> <td>{{=n.bits_name}}</td> 
-					<td><a href='/regs/delete_b/{{=n.id}}'>删除</a></td>
-					<td><a href='/regs/add_mean/{{=n.bits_name}}/{{=n.id}}'>添加含义</a></td>
+					<td><div class="btn_new"><a href='/regs/add_mean/{{=n.bits_name}}/{{=n.id}}'>添加含义</a></div></td>
+					<td><div class="btn_new"><a href='/regs/delete_b/{{=n.id}}'>删除</a></div></td>
 				</tr>
+             {{for m in ms:}}
+                {{if int(m.bits_id)==n.id:}}
+				<tr>
+                    <td></td>
+					<td>{{=m.val}} </td> <td>{{=m.meanings}}</td> 
+					<td><div class="btn_new"><a href='/regs/delete_mean/{{=m.id}}'>删除</a></div></td>
+			 	</tr>
+			    {{pass}}
+			  {{pass}}
 			{{pass}}
 	     </table>
 			<table class="table table-striped table-bordered table-condensed">
