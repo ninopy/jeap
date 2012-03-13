@@ -130,7 +130,7 @@ def add_r(device_name,device_id):
                 return {'form':form}
  
 @expose('/regs/edit_r/<id>')
-def edit_r(reg_name,id):
+def edit_r(id):
     if require_login():
          return redirect(url_for(login))
     r = mreg.get(mreg.c.id == id)
