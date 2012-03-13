@@ -129,7 +129,7 @@ def add_r(device_name,device_id):
                 message='错误'
                 return {'form':form}
  
-@expose('/regs/edit_r/<reg_name>/<id>')
+@expose('/regs/edit_r/<id>')
 def edit_r(reg_name,id):
     if require_login():
          return redirect(url_for(login))
@@ -179,6 +179,7 @@ def regcal(sbit,ebit,value):
 @expose('/regs/search/<id>')
 def search(id):
     m = []
+    ms = []
     b1 = []
     r = mreg.get(mreg.c.id == id)
     b = mbits.filter(mbits.c.reg_id == id)
@@ -190,17 +191,21 @@ def search(id):
         mean = mmeanings.filter(mmeanings.c.bits_id==n.id).filter(mmeanings.c.val==str(n.val))
         for me1 in mean:
             m.append(me1)
-    return {'r':r,'b1':b1,'m':m,'rvalue':rvalue}
+    for b2 in b:
+        m2 = mmeanings.filter(mmeanings.c.bits_id==b2.id)
+        for m1 in m2:
+            ms.append(m1)
+    return {'r':r,'b1':b1,'m':m,'rvalue':rvalue,'ms':ms}
 	
 @expose('/regs/delete_r/<id>')
 def delete_r(id):
     if require_login():
-         return redirect(url_for(login))
+        return redirect(url_for(login))
     r = mreg.get(mreg.c.id == id)
     if cmp(r.adminname,request.user.username) and (request.user.is_superuser == False):
         return redirect('/message/您不是该知识点的管理者')
-	r.delete()
-	return redirect('/message/删除完成')
+    r.delete()
+    return redirect('/message/删除完成')
 ##########################################################
 @expose('/regs/add_b/<reg_name>/<reg_id>')
 def add_b(reg_name,reg_id):

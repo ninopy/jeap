@@ -29,14 +29,14 @@
 				<tr>
 					<td>[{{=n.bits_sbit}}-{{=n.bits_ebit}} ]</td> <td>{{=n.bits_name}}</td> 
 					<td><div class="btn_new"><a href='/regs/add_mean/{{=n.bits_name}}/{{=n.id}}'>添加含义</a></div></td>
-					<td><div class="btn_new"><a href='/regs/delete_b/{{=n.id}}'>删除</a></div></td>
+					<td><div class="btn_new"><a href='/regs/delete_b/{{=n.id}}' onclick="return confirm('确认要删除？');">删除</a></div></td>
 				</tr>
              {{for m in ms:}}
                 {{if int(m.bits_id)==n.id:}}
 				<tr>
                     <td></td>
 					<td>{{=m.val}} </td> <td>{{=m.meanings}}</td> 
-					<td><div class="btn_new"><a href='/regs/delete_mean/{{=m.id}}'>删除</a></div></td>
+					<td><div class="btn_new"><a href='/regs/delete_mean/{{=m.id}}' onclick="return confirm('确认要删除？');">删除</a></div></td>
 			 	</tr>
 			    {{pass}}
 			  {{pass}}
@@ -44,8 +44,8 @@
 	     </table>
 			<table class="table table-striped table-bordered table-condensed">
 				<td><a class="btn btn-primary" href='/regs/add_b/{{=r.reg_name}}/{{=r.id}}'>添加位说明</a>
-				<td><a class="btn btn-primary" href='/regs/edit_r/{{=r.reg_name}}/{{=r.id}}'><i class="icon-pencil"></i> 修改寄存器</a>
-				<td><a class ="btn btn-danger" href='/regs/delete_r/{{=r.id}}'><i class="icon-trash"></i>删除改寄存器</a>
+				<td><a class="btn btn-primary" href='/regs/edit_r/{{=r.id}}'><i class="icon-pencil"></i> 修改寄存器</a>
+				<td><a class ="btn btn-danger" href='/regs/delete_r/{{=r.id}}' onclick="return confirm('确认要删除？');"><i class="icon-trash"></i>删除改寄存器</a>
 	     </table>
 			感谢 {{=r.adminname}} 对本知识点管理维护</br>
 		<hr>		
