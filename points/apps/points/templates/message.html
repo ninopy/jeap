@@ -2,5 +2,5 @@
  {{extend "base.html"}} 
 
 {{block content}} 
-<h3>{{=m}}</h3> <a href="/">返回主页</a>
+<h3>{{=m}},如果返回后，显示没有变化，请刷新！！</h3> <div class="btn_new"><a href="javascript:history.go({{=int(n)}});">返回</a></div>
 {{end}}

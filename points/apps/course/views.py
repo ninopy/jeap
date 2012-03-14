@@ -34,7 +34,7 @@ def add_c():
                 n = mcourses(**form.data)
                 c = mcourses.get(mcourses.c.c_name == form.data.c_name)
                 if c:
-                   return redirect('/message/添加错误,重名')
+                   return redirect('/message/添加错误,重名/-2')
                 n.adminname=request.user
                 n.save()
                 ne = events()
@@ -42,7 +42,7 @@ def add_c():
                 ne.action = '增加了课程'
                 ne.objs = form.data.c_name
                 ne.save()
-                return redirect('/message/添加完成')
+                return redirect('/message/添加完成/-2')
             else:
                 message='错误'
                 return {'form':form}
@@ -53,7 +53,7 @@ def edit_c(c_name,id):
           return redirect(url_for(login))
     c = mcourses.get(mcourses.c.id == id)
     if cmp(c.adminname,request.user.username) and (request.user.is_superuser == False):
-        return redirect('/message/您不是该课程的管理者')
+        return redirect('/message/您不是该课程的管理者/-1')
     if request.method == 'GET': 
 		c = mcourses.get(mcourses.c.id == id)
 		form = CoursesForm(data ={'c_name':c.c_name,'c_desc':c.c_desc})
@@ -70,7 +70,7 @@ def edit_c(c_name,id):
                 ne.action = '修改了课程'
                 ne.objs = form.data.c_name
                 ne.save()
-                return redirect('/message/添加完成')
+                return redirect('/message/添加完成/-2')
             else:
                 message='错误'
                 return {'form':form}
@@ -91,7 +91,7 @@ def display_c(c_name,id):
     c_cdc = cdc.filter(cdc.c.c_parent_c==c_name)
     c = mcourses.get(mcourses.c.c_name == c_name)
     if not c :
-           return redirect('/message/该课程不存在，您可以添加')	
+           return redirect('/message/该课程不存在，您可以添加/-1')	
     p_cdp = cdp.filter(cdp.c.c_name==c_name)
     comm = comments.filter(comments.c.comm_objs==c_name)
     form = CommForm()
@@ -103,14 +103,14 @@ def delete_c(id):
         return redirect(url_for(login))
     c=mcourses.get(int(id))
     if cmp(c.adminname,request.user.username) and (request.user.is_superuser == False):
-        return redirect('/message/您不是该课程的管理者')
+        return redirect('/message/您不是该课程的管理者/-1')
     c.delete()
     ne = events()
     ne.username = request.user
     ne.action = '删除了课程'
     ne.objs = c.c_name
     ne.save()
-    return redirect('/message/删除完成')
+    return redirect('/message/删除完成/-2')
 
 @expose('/course/delete_cco/<id>')
 def delete_cco(id):
@@ -119,10 +119,10 @@ def delete_cco(id):
     co = comments.get(comments.c.id == id)
     p = mcourses.get(mcourses.c.c_name == co.comm_objs)
     if cmp(p.adminname,request.user.username)and (request.user.is_superuser == False):
-        return redirect('/message/您不是该主题的管理者')
+        return redirect('/message/您不是该主题的管理者/-1')
     co = comments.get(comments.c.id == id)
     co.delete()
-    return redirect('/message/删除完成')
+    return redirect('/message/删除完成/-2')
 
 
 ######################################
@@ -144,7 +144,7 @@ def add_cc(c_name):
                 ne.action = '增加了课程依赖'
                 ne.objs = c_name
                 ne.save()
-                return redirect('/message/添加完成')
+                return redirect('/message/添加完成/-2')
             else:
                 message='错误'
                 return {'form':form}
@@ -167,7 +167,7 @@ def add_cp(c_name):
                 ne.action = '增加了知识点依赖'
                 ne.objs = c_name
                 ne.save()
-                return redirect('/message/添加完成')
+                return redirect('/message/添加完成/-2')
             else:
                 message='错误'
                 return {'form':form}

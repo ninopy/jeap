@@ -20,9 +20,9 @@ def index():
 	points = mpoints.all().order_by(mpoints.c.id.desc()).limit(10)
 	return {'event':event,'courses':courses,'points':points}
 
-@expose('/message/<m>')
-def message(m):
-	return {'m':m}
+@expose('/message/<m>/<n>')
+def message(m,n):
+    return {'m':m,'n':n}
 
 @expose('/points/')
 def index_p():
@@ -44,7 +44,7 @@ def add_p(name):
                 n = mpoints(**form.data)
                 p = mpoints.get(mpoints.c.p_name == form.data.p_name)
                 if p:
-                    return redirect('/message/添加错误，重名')
+                    return redirect('/message/添加错误，重名/-1')
                 n.status = '开启'
                 n.adminname = request.user
                 n.save()
@@ -53,7 +53,7 @@ def add_p(name):
                 ne.action = '增加了知识点'
                 ne.objs = form.data.p_name
                 ne.save()
-                return redirect('/message/添加完成') 
+                return redirect('/message/添加完成/-1') 
             else:
                 message='错误'
                 return {'form':form}
@@ -64,7 +64,7 @@ def edit_p(p_name,id):
 		return redirect(url_for(login))
 	p = mpoints.get(mpoints.c.id == id)
 	if cmp(p.adminname,request.user.username) and (request.user.is_superuser == False):
-		return redirect('/message/您不是该知识点的管理者')
+		return redirect('/message/您不是该知识点的管理者/-1')
 	from forms import PointsForm
 	if request.method == 'GET': 
 		p = mpoints.get(mpoints.c.id == id)
@@ -84,7 +84,7 @@ def edit_p(p_name,id):
                 ne.action = '修改了知识点'
                 ne.objs = form.data.p_name
                 ne.save()
-                return redirect('/message/添加完成')
+                return redirect('/message/添加完成/-2')
             else:
                 message='错误'
                 return {'form':form}
@@ -119,10 +119,10 @@ def delete_pco(id):
 	co = comments.get(comments.c.id == id)
 	p = mpoints.get(mpoints.c.p_name == co.comm_objs)
 	if cmp(p.adminname,request.user.username) and (request.user.is_superuser == False) :
-		return redirect('/message/您不是该主题的管理者')
+		return redirect('/message/您不是该主题的管理者/-1')
 	co = comments.get(comments.c.id == id)
 	co.delete()
-	return redirect('/message/删除成功')
+	return redirect('/message/删除成功/-2')
 
 @expose('/points/delete_p/<id>')
 def delete_p(id):
@@ -130,14 +130,14 @@ def delete_p(id):
 		return redirect(url_for(login))
 	p = mpoints.get(mpoints.c.id == id)
 	if cmp(p.adminname,request.user.username) and (request.user.is_superuser == False):
-		return redirect('/message/您不是该知识点的管理者')
+		return redirect('/message/您不是该知识点的管理者/-1')
 	p.delete()
 	ne = events()
 	ne.username = request.user
 	ne.action = '删除了知识点'
 	ne.objs = p.p_name
 	ne.save()
-	return redirect('/message/删除成功')
+	return redirect('/message/删除成功/-2')
 ######################################
 @expose('/points/add_d/<p_name>')
 def add_d(p_name):
@@ -157,7 +157,7 @@ def add_d(p_name):
                 ne.action = '增加了知识点依赖'
                 ne.objs = p_name
                 ne.save()
-                return redirect('/message/添加完成')
+                return redirect('/message/添加完成/-2')
             else:
                 message='错误'
                 return {'form':form}

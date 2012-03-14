@@ -21,13 +21,11 @@ from points.models import events
 
 @expose('/regs/')
 def index_device():
-#	devices = mdevice.all()
-#	soc = msoc.all()
 	return {}
 
 @expose('/getregsdata')
 def getregsdata():
-    data = [{'id':'1','pId':'0','name':'SOC列表'},]
+    data = [{'id':'1','pId':'0','name':'SOC列表','open':'true'},]
     countid = 2
     soc = msoc.all()
     devices = mdevice.all()
@@ -56,7 +54,7 @@ def add_soc():
             n = msoc(**form.data)
             s = msoc.get(msoc.c.soc_name == form.data.soc_name)		
             if s: 
-                return redirect('/message/添加错误，重名') 
+                return redirect('/message/添加错误，重名/-1') 
         n.save()
         return redirect('/regs/')
 
@@ -72,10 +70,10 @@ def delete_soc(id):
     if require_login():
          return redirect(url_for(login))
     if (request.user.is_superuser == False):
-        return redirect('/message/只有管理员才能删除SOC')
+        return redirect('/message/只有管理员才能删除SOC/-1')
     s = msoc.get(msoc.c.id == id)
     s.delete()
-    return redirect('/message/删除完成')
+    return redirect('/message/删除完成/-2')
 
 @expose('/regs/delete_device/<id>')
 def delete_device(id):
@@ -83,9 +81,9 @@ def delete_device(id):
          return redirect(url_for(login))
     d = mdevice.get(mdevice.c.id == id)
     if cmp(d.adminname,request.user.username) and (request.user.is_superuser == False):
-        return redirect('/message/只有设备管理者才能删除')
+        return redirect('/message/只有设备管理者才能删除/-1')
     d.delete()
-    return redirect('/message/删除完成')
+    return redirect('/message/删除完成/-2')
 
 
 
@@ -104,7 +102,7 @@ def add_device(soc_name,id):
             s = mdevice.filter(mdevice.c.device_name == form.data.device_name)\
                        .filter(mdevice.c.soc_name == soc_name)		
             for s1 in s:
-                return redirect('/message/添加错误，重名') 
+                return redirect('/message/添加错误，重名/-1') 
         n.soc_name=soc_name
         n.adminname = request.user
         n.save()
@@ -131,7 +129,7 @@ def add_r(device_name,device_id):
                 n = mreg(**form.data)
                 r = mreg.filter(mreg.c.reg_name == form.data.reg_name).filter(mreg.c.device_id==device_id)
                 for r1 in r:
-                    return redirect('/message/添加错误，重名') 
+                    return redirect('/message/添加错误，重名/-1') 
                 n.adminname = request.user
                 n.device_name = device_name
                 n.device_id   = device_id
@@ -141,7 +139,7 @@ def add_r(device_name,device_id):
                 ne.action = '增加了寄存器'
                 ne.objs = form.data.reg_name
                 ne.save()
-                return redirect('/message/添加完成') 
+                return redirect('/message/添加完成/-2') 
             else:
                 message='错误'
                 return {'form':form}
@@ -152,7 +150,7 @@ def edit_r(id):
          return redirect(url_for(login))
     r = mreg.get(mreg.c.id == id)
     if cmp(r.adminname,request.user.username) and (request.user.is_superuser == False):
-        return redirect('/message/您不是该知识点的管理者')
+        return redirect('/message/您不是该知识点的管理者/-1')
     if request.method == 'GET': 
 		r = mreg.get(mreg.c.id == id)
 		form = RegForm(data ={'reg_name':r.reg_name,'reg_desc':r.reg_desc,\
@@ -167,7 +165,7 @@ def edit_r(id):
                 n.reg_desc= form.data.reg_desc
                 n.reg_address= form.data.reg_address
                 n.save()
-                return redirect('/message/编辑完成')
+                return redirect('/message/编辑完成/-2')
             else:
                 message='错误'
                 return {'form':form}
@@ -218,9 +216,9 @@ def delete_r(id):
         return redirect(url_for(login))
     r = mreg.get(mreg.c.id == id)
     if cmp(r.adminname,request.user.username) and (request.user.is_superuser == False):
-        return redirect('/message/您不是该知识点的管理者')
+        return redirect('/message/您不是该知识点的管理者/-1')
     r.delete()
-    return redirect('/message/删除完成')
+    return redirect('/message/删除完成/-2')
 ##########################################################
 @expose('/regs/add_b/<reg_name>/<reg_id>')
 def add_b(reg_name,reg_id):
@@ -237,7 +235,7 @@ def add_b(reg_name,reg_id):
                 b = mbits.filter(mbits.c.bits_name == form.data.bits_name)\
                          .filter(mbits.c.reg_id == reg_id)
                 for b1 in b:
-                    return redirect('/message/添加错误，重名') 
+                    return redirect('/message/添加错误，重名/-1') 
                 n.reg_name = reg_name
                 n.reg_id = reg_id
                 n.save()
@@ -258,9 +256,9 @@ def delete_b(id):
     b = mbits.get(mbits.c.id == id)
     r = mreg.get(mreg.c.id == b.reg_id)
     if cmp(r.adminname,request.user.username) and (request.user.is_superuser == False):
-        return redirect('/message/您不是该知识点的管理者')
+        return redirect('/message/您不是该知识点的管理者/-1')
     b.delete()
-    return redirect('/message/删除完成')
+    return redirect('/message/删除完成/-2')
 
 
 ##########################################################
@@ -278,7 +276,7 @@ def add_mean(bits_name,bits_id):
                 n = mmeanings(**form.data)
                 m = mmeanings.filter(mmeanings.c.val == form.data.val).filter(mmeanings.c.bits_id==bits_id)
                 for m1 in m:
-                    return redirect('/message/改值已经存在') 
+                    return redirect('/message/该值已经存在/-1') 
                 n.bits_name = bits_name
                 n.bits_id = bits_id
                 n.save()
@@ -295,9 +293,9 @@ def delete_mean(id):
     b = mbits.get(mbits.c.id == m.bits_id)
     r = mreg.get(mreg.c.id == b.reg_id)
     if cmp(r.adminname,request.user.username) and (request.user.is_superuser == False):
-        return redirect('/message/您不是该知识点的管理者')
+        return redirect('/message/您不是该知识点的管理者/-1')
     m.delete()
-    return redirect('/message/删除完成')
+    return redirect('/message/删除完成/-2')
 
 
 
