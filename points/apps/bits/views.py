@@ -21,10 +21,27 @@ from points.models import events
 
 @expose('/regs/')
 def index_device():
-	devices = mdevice.all()
-	soc = msoc.all()
-	return {'devices':devices,'soc':soc}
+#	devices = mdevice.all()
+#	soc = msoc.all()
+	return {}
 
+@expose('/getregsdata')
+def getregsdata():
+    data = [{'id':'1','pId':'0','name':'SOC列表'},]
+    countid = 2
+    soc = msoc.all()
+    devices = mdevice.all()
+    for s in soc:
+        soc_url='/regs/display_soc/%s/%s' % (s.soc_name,s.id)
+        data.append({'id':countid,'pId':'1','name':s.soc_name,'url':soc_url,'target':'_self'})
+        sid = countid
+        countid += 1
+        for d in devices:
+            if d.soc_name == s.soc_name:
+                dev_url='/regs/display_device/%s/%s' % (d.device_name,d.id)
+                data.append({'id':countid,'pId':sid,'name':d.device_name,'url':dev_url,'target':'_self'})
+                countid += 1
+    return json(data)
 
 @expose('/regs/add_soc')
 def add_soc():

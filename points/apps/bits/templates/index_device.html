@@ -1,45 +1,39 @@
    {{extend "base.html"}}  
 {{block content}}
 
+{{use "jquery"}}
+{{use "ztree"}}
 
+ <SCRIPT LANGUAGE="JavaScript">
+    var setting = {
+            data:{
+                simpleData:{
+                    enable:true,
+                    idKey:'id',
+                    pIdKey:'pId',
+                    }
+                },
+            async:{
+                enable:true,
+                url:"/getregsdata",
+                }
+    };
 
-  <div class="row">
-  <div class="span4">
-	<div class="well">
-	<table >
-	   <hr>
-       {{count = 1}}
-            {{for n in devices:}}
-				<tr>
-				<td>{{=count}}</td> 
-				<td><a href='/regs/display_device/{{=n.device_name}}/{{=n.id}}'>{{=n.soc_name}}的{{=n.device_name}}</a ></td> 
-				</tr>
-               {{count = count +1}} 
-            {{pass}}
-		
-	 </table>
-     </div>
-     </div>
-  <div class="span4">
-	<div class="well">
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeRegs"), setting);
+    });
+
+</SCRIPT>
+
+<div class="span4">
+ <div class="well">
    <div class="btn_new"><a href='/regs/add_soc'>新添加soc</a></div>
-	<hr>
-	<table >
-       {{count = 1}}
-            {{for n in soc:}}
-				<tr>
-				<td>{{=count}}</td> 
-				<td><a href='/regs/display_soc/{{=n.soc_name}}/{{=n.id}}'>{{=n.soc_name}}</a ></td> 
-				</tr>
-               {{count = count +1}} 
-            {{pass}}
-	 </table>
-     </div>
-     </div>
-  
+    <hr>
+    <ul id="treeRegs" class="ztree"></ul>
+ </div>
+</div>
 
 
 
-   </div>
 
 {{end}}
