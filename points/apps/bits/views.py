@@ -156,7 +156,7 @@ def edit_r(id):
     if request.method == 'GET': 
 		r = mreg.get(mreg.c.id == id)
 		form = RegForm(data ={'reg_name':r.reg_name,'reg_desc':r.reg_desc,\
-							'reg_address':r.reg_address,'device_name':r.device_name,'device_id':r.device_id})
+							'reg_address':r.reg_address})
 		return {'form':form}	
     elif request.method == 'POST':
             form = RegForm()
@@ -166,8 +166,6 @@ def edit_r(id):
                 n.reg_name= form.data.reg_name
                 n.reg_desc= form.data.reg_desc
                 n.reg_address= form.data.reg_address
-                n.device_name= form.data.device_name
-                n.device_id= form.data.device_id
                 n.save()
                 return redirect('/message/编辑完成')
             else:
