@@ -191,6 +191,8 @@ def regcal(sbit,ebit,value):
 
 @expose('/regs/search/<id>')
 def search(id):
+    if request.method == 'GET':
+        return redirect("/regs/display_r/%s"% id)
     m = []
     ms = []
     b1 = []
