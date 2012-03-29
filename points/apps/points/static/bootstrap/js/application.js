@@ -68,9 +68,8 @@
     $('.popover-test').popover()
 
     // popover demo
-    $("a[rel=popover]")
-      .popover()
-      )
+    $("a[rel=popover]").popover()
+      
 
     // button state demo
     $('#fat-btn')
