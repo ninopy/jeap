@@ -3369,3 +3369,34 @@ a.thumbnail:hover {
 .btn_new  a{float:left;margin:0 0 0 8px; text-align: center; }
 .btn_new  a{color:#fff!important; line-height: 23px; width:100px; display:inline-block; height: 25px;background: url(../img/nav_bu.png) no-repeat 0 -25px; }
 .btn_new  a:hover{color:#000!important; text-decoration:none;background: url(../img/nav_bu.png) no-repeat 0 0; }
+
+.panel {
+       -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+       -o-border-radius: 3px;
+       border-radius: 3px;
+
+       -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+       -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+       -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+
+       background-color: #fff;
+       border: 2px solid #fff;
+}
+
+#subnav img {
+  height: 50px;
+  width: 50px;
+  vertical-align: middle;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+#subnav a:hover img, #subnav a.hover img {
+  height: 70px;
+  width: 70px;
+}
+
