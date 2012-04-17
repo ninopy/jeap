@@ -68,7 +68,7 @@
     $('.popover-test').popover()
 
     // popover demo
-    $("a[rel=popover]").popover()
+    $("a[rel=popover]").popover({placement:'bottom'})
       
 
     // button state demo
